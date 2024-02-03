@@ -1,32 +1,25 @@
-// import SlimSelect from 'slim-select';
-// import Choices from 'choices.js';
 import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from "./cat-api";
 
-const select1 = document.querySelector('select.breed-select');
-//  const element1 = document.querySelector('.js-choice');
-// const choices = new Choices(element1);
+const select = document.querySelector('select.breed-select');
 
 const catInfo = document.querySelector('.cat-info');
 const loader = document.querySelector('.loader');
 
 loader.classList.add('is-hidden');
 
-select1.addEventListener('change', requestForCompleteInformation);
-// element1.addEventListener('change', requestForCompleteInformation);
+select.addEventListener('change', requestForCompleteInformation);
 fetchBreeds().then(fillsInTheSelectionField).catch(requestError);
 
 function fillsInTheSelectionField(cats) {
     cats.forEach(element => {
         let newOption = new Option( `${element.name}`,`${element.id}`);
-       select1.add(newOption);
-      // element1.add(newOption);
+       select.add(newOption);
    });
 }
 
 function requestForCompleteInformation() {
-  const selectedValue = select1.value;
-  //  const selectedValue = choices.value;
+  const selectedValue = select.value;
   loader.classList.remove('is-hidden');
   catInfo.hidden = true;
   fetchCatByBreed(selectedValue).then(renderCatCard).catch(requestError);
